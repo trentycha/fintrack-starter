@@ -1,6 +1,7 @@
 # FinTrack
 
 Application de gestion de budget personnel.
+Ingénieur qualité : Charlène
 
 ## Stack
 
