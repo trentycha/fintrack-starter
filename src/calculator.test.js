@@ -1,4 +1,15 @@
-import { add, subtract, multiply, divide, modulo, simpleInterest } from './calculator.js';
+import {
+  add,
+  subtract,
+  multiply,
+  divide,
+  modulo,
+  simpleInterest,
+  compoundInterest,
+  convertCurrency,
+  computeBalance,
+  formatAmount,
+} from './calculator.js';
 
 describe('add', () => {
   it('retourne 5 quand on additionne 2 et 3', () => {
@@ -98,5 +109,45 @@ describe('simpleInterest avec date mockée', () => {
   it('calcule correctement avec une date fixée', () => {
     const years = (Date.now() - 1700000000000) / (1000 * 60 * 60 * 24 * 365);
     expect(simpleInterest(1000, 5, years)).toBe(0);
+  });
+});
+
+describe('computeBalance', () => {
+  it('additionne les crédits au solde', () => {
+    expect(computeBalance([{ amount: 100, type: 'credit' }])).toBe(100);
+  });
+
+  it('soustrait les débits du solde', () => {
+    expect(computeBalance([{ amount: 50, type: 'debit' }])).toBe(-50);
+  });
+
+  it('retourne 0 pour un tableau vide', () => {
+    expect(computeBalance([])).toBe(0);
+  });
+});
+
+describe('formatAmount', () => {
+  it('formate un montant en EUR', () => {
+    expect(formatAmount(42.5, 'EUR')).toBe('42.50 €');
+  });
+
+  it('utilise le code devise comme fallback si inconnue', () => {
+    expect(formatAmount(42.5, 'JPY')).toBe('42.50 JPY');
+  });
+});
+
+describe('compoundInterest', () => {
+  it("retourne l'intérêt composé correct", () => {
+    expect(compoundInterest(1000, 10, 1)).toBeCloseTo(100);
+  });
+});
+
+describe('convertCurrency', () => {
+  it('convertit un montant avec un taux positif', () => {
+    expect(convertCurrency(100, 1.08)).toBeCloseTo(108);
+  });
+
+  it('retourne un montant négatif si le taux est négatif', () => {
+    expect(convertCurrency(100, -1)).toBe(-100);
   });
 });
