@@ -24,6 +24,8 @@ L'appli est dispo sur http://localhost:5173.
 - `src/seed.js` — données de démarrage
 - `src/App.jsx` — interface
 
+[![CI](https://github.com/trentycha/fintrack-starter/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/trentycha/fintrack-starter/actions/workflows/ci.yml)
+
 ## TODO
 
 - [ ] Ajouter des tests
