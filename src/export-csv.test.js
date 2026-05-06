@@ -24,13 +24,15 @@ test('les transactions hors du mois en cours sont filtrées', () => {
 });
 
 test('les virgules dans les libellés sont échappées', () => {
-  
   const date = new Date().toISOString();
   const transactions = [
-    { date, label: 'Courses, Carrefour', amount: 78.4, category: 'alimentation' }
+    { date, label: 'Courses, Carrefour', amount: 78.4, category: 'alimentation' },
   ];
   expect(exportCSV(transactions)).toBe(
-    `date,libellé,montant,catégorie\n${date},"Courses, Carrefour",78.4,alimentation`
+    `date,libellé,montant,catégorie\n${date},"Courses, Carrefour",78.4,alimentation`,
   );
-  
+});
+
+test("un tableau vide retourne juste l'en-tête CSV", () => {
+  expect(exportCSV([])).toBe('date,libellé,montant,catégorie');
 });
