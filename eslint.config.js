@@ -5,7 +5,7 @@ import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
   {
-    ignores: ['babel.config.cjs', 'node_modules/**'],
+    ignores: ['babel.config.cjs', 'node_modules/**', 'coverage/**'],
   },
   {
     files: ['**/*.{js,mjs,cjs,jsx}'],

@@ -1,9 +1,7 @@
-import {
-  reverse
-} from './string-utils';
+import { reverse } from './string-utils.js';
 
-test('reverse "abc" returns "cba"', () => { 
-    expect(reverse('abc')).toBe('cba');
+test('reverse "abc" returns "cba"', () => {
+  expect(reverse('abc')).toBe('cba');
 });
 
 test('reverse "" retourne ""', () => {
