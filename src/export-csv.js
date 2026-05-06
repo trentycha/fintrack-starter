@@ -7,7 +7,7 @@ function escapeField(value) {
 }
 
 export function exportCSV(transactions) {
-  const header = 'date,libellé,montant,catégorie';
+  const header = 'date;libellé;montant;catégorie';
   const now = new Date();
   const lines = transactions
     .filter((tx) => {
@@ -16,7 +16,7 @@ export function exportCSV(transactions) {
     })
     .map(
       (tx) =>
-        `${escapeField(tx.date)},${escapeField(tx.label)},${escapeField(tx.amount)},${escapeField(tx.category)}`,
+        `${escapeField(tx.date)};${escapeField(tx.label)};${escapeField(tx.amount)};${escapeField(tx.category)}`,
     );
   return [header, ...lines].join('\n');
 }
