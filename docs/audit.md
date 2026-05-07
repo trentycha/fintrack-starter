@@ -85,3 +85,19 @@ Localisation : transactions-legacy.js:140-165 (catégorisation par `indexOf`)
 Constat : la catégorie est devinée à partir du libellé avec des mots-clés en dur.
 Impact : un libellé inattendu tombe silencieusement en catégorie `autre` sans avertissement.
 Proposition : stocker la catégorie directement dans la donnée et ne pas la deviner.
+
+## Refactoring effectué
+
+### Zone 1 : Taux de change magic numbers
+Remplacement du bloc `if/else` avec les taux codés en dur par une constante 
+nommée `EXCHANGE_RATES`. Les taux sont maintenant centralisés en un seul 
+endroit, plus lisibles et plus faciles à modifier.
+
+### Zone 2 : Dead code supprimé
+Suppression de la fonction `legacyHelper` jamais utilisée et de la fonction 
+`formatDate2` commentée. Le module est maintenant plus léger et ne contient 
+plus de code inutile à maintenir.
+
+### Renommage
+La variable `lab` a été renommée en `label` pour plus de clarté dans le bloc 
+de catégorisation.
