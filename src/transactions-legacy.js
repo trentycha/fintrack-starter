@@ -9,6 +9,13 @@
 
 // ============================================================================
 
+const EXCHANGE_RATES = {
+  'USD->EUR': 0.92,
+  'EUR->USD': 1.08,
+  'GBP->EUR': 1.17,
+  'EUR->GBP': 0.85,
+};
+
 var TYPES = ['credit', 'debit', 'transfer'];
 
 // fonction utilitaire (utilisée nulle part ailleurs ?)
@@ -110,18 +117,8 @@ export function processTransactions(txs, opts) {
 
     // conversion devise si besoin
     if (tx.currency && tx.currency !== opts.currency) {
-      // taux en dur, à mettre à jour à la main tous les mois...
-      if (tx.currency === 'USD' && opts.currency === 'EUR') {
-        rate = 0.92;
-      } else if (tx.currency === 'EUR' && opts.currency === 'USD') {
-        rate = 1.08;
-      } else if (tx.currency === 'GBP' && opts.currency === 'EUR') {
-        rate = 1.17;
-      } else if (tx.currency === 'EUR' && opts.currency === 'GBP') {
-        rate = 0.85;
-      } else {
-        rate = 1; // fallback
-      }
+      const key = `${tx.currency}->${opts.currency}`;
+      rate = EXCHANGE_RATES[key] || 1;
       converted = tx.amount * rate;
     } else {
       converted = tx.amount;
