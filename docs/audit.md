@@ -101,3 +101,14 @@ plus de code inutile à maintenir.
 ### Renommage
 La variable `lab` a été renommée en `label` pour plus de clarté dans le bloc 
 de catégorisation.
+
+## Éco-impact
+
+### Score Lighthouse initial
+Score Performance : **100/100** (mode production, `npm run preview`)
+
+Bundle size : 149.33 kB (47.74 kB gzip)
+CSS : 3.74 kB (1.32 kB gzip)
+
+### Optimisation appliquée
+Aucune optimisation nécessaire.
