@@ -28,14 +28,6 @@ function fmt(d) {
   return dd + '/' + mm + '/' + yyyy;
 }
 
-// fonction utilitaire bis (faut-il vraiment deux fonctions de format ?)
-// function formatDate2(date) {
-//   var d = date.getDate();
-//   var m = date.getMonth() + 1;
-//   var y = date.getFullYear();
-//   return (d < 10 ? '0' + d : d) + '/' + (m < 10 ? '0' + m : m) + '/' + y;
-// }
-
 // THE function
 export function processTransactions(txs, opts) {
   var result = [];
@@ -224,12 +216,4 @@ export function processTransactions(txs, opts) {
     errors: errors,
     warnings: warnings,
   };
-}
-
-// helper utilisé nulle part (dead code ?)
-export function legacyHelper(x) {
-  if (x === null) return null;
-  if (x === undefined) return undefined;
-  if (typeof x === 'string') return x.trim();
-  return x;
 }
