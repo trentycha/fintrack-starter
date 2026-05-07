@@ -35,3 +35,53 @@ au lieu de `filter/map/reduce`, et des taux de change codés en dur. La fonction
 - **Tri par date fragile** (lignes ~195-205) : le tri repose sur un parsing manuel 
   de chaînes `dd/mm/yyyy`. Un format de date inattendu produirait un tri incorrect 
   sans erreur. Impact : ordre des transactions incorrect.
+
+  ## Code smells identifiés
+
+### [Long Method] — Priorité : Haute
+Localisation : transactions-legacy.js:35 (`processTransactions`)
+Constat : la fonction fait ~180 lignes et gère 6 responsabilités distinctes.
+Impact : impossible à tester unitairement, une modification peut casser une autre zone.
+Proposition : découper en fonctions séparées — `filterByMonth`, `validateTransaction`, `convertCurrency`, `categorize`, `sortByDate`.
+
+### [God Object] — Priorité : Haute
+Localisation : transactions-legacy.js (module entier)
+Constat : le module concentre filtrage, validation, conversion, catégorisation, tri et calculs dans un seul endroit.
+Impact : toute modification nécessite de comprendre l'intégralité du module.
+Proposition : séparer en modules distincts par responsabilité.
+
+### [Magic Number] — Priorité : Haute
+Localisation : transactions-legacy.js:110-125
+Constat : les taux de change sont codés en dur (0.92, 1.08, 1.17, 0.85).
+Impact : si un taux change, il faut modifier le code sans aucun contexte sur la signification des valeurs.
+Proposition : extraire dans une constante nommée `EXCHANGE_RATES` ou récupérer depuis une API.
+
+### [Dead Code] — Priorité : Moyenne
+Localisation : transactions-legacy.js:25 (`formatDate2` commentée) et fonction `legacyHelper`
+Constat : `formatDate2` est commentée, `legacyHelper` est exportée mais jamais utilisée.
+Impact : surface de code inutile qui génère de la confusion.
+Proposition : supprimer les deux.
+
+### [Duplicate Code] — Priorité : Moyenne
+Localisation : transactions-legacy.js:15 (`fmt`) et transactions-legacy.js:25 (`formatDate2`)
+Constat : deux fonctions de formatage de date avec la même logique.
+Impact : si le format change, il faut modifier aux deux endroits.
+Proposition : garder une seule fonction de formatage réutilisable.
+
+### [Unclear Naming] — Priorité : Moyenne
+Localisation : transactions-legacy.js:35 (`i`, `j`, `tx`, `lab`, `pa`, `pb`, `da`, `db`)
+Constat : variables à un ou deux caractères sans contexte clair.
+Impact : lecture difficile, débogage ralenti.
+Proposition : renommer en `transactionIndex`, `transaction`, `label`, `datePartsA` etc.
+
+### [Long Parameter List] — Priorité : Basse
+Localisation : transactions-legacy.js:35 (`processTransactions(txs, opts)`)
+Constat : `opts` est un objet qui regroupe 4 paramètres implicites (currency, month, year, threshold).
+Impact : l'interface de la fonction n'est pas claire sans lire la doc ou le code.
+Proposition : utiliser un objet avec des valeurs par défaut explicites et documentées.
+
+### [Fragile Logic] — Priorité : Haute
+Localisation : transactions-legacy.js:140-165 (catégorisation par `indexOf`)
+Constat : la catégorie est devinée à partir du libellé avec des mots-clés en dur.
+Impact : un libellé inattendu tombe silencieusement en catégorie `autre` sans avertissement.
+Proposition : stocker la catégorie directement dans la donnée et ne pas la deviner.
