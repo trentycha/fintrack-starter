@@ -1,39 +1,81 @@
 # FinTrack
 
-Application de gestion de budget personnel.
-Ingénieur qualité : Charlène
+Application de suivi de finances personnelles développée en React/Vite. 
+Permet de visualiser ses transactions du mois, calculer son solde, 
+estimer ses intérêts et exporter ses données en CSV.
 
-## Stack
+![CI](https://github.com/TON_USERNAME/fintrack-starter/actions/workflows/playwright.yml/badge.svg)
 
-- React 18
-- Vite
+## Prérequis
+
+- Node.js 20.11.0 (voir `.nvmrc`)
+- npm
 
 ## Installation
 
 ```bash
-npm ci
-npm run dev
+git clone https://github.com/TON_USERNAME/fintrack-starter.git
+cd fintrack-starter
+npm install --legacy-peer-deps
 ```
 
-L'appli est dispo sur http://localhost:5173.
+## Lancement
 
-## Structure
+```bash
+# Développement
+npm run dev
 
-- `src/calculator.js` — moteur de calcul
-- `src/transactions-legacy.js` — module historique de traitement des transactions
-- `src/seed.js` — données de démarrage
-- `src/App.jsx` — interface
+# Build production
+npm run build
 
-[![CI](https://github.com/trentycha/fintrack-starter/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/trentycha/fintrack-starter/actions/workflows/ci.yml)
+# Preview production
+npm run preview
+```
 
-## TODO
+## Tests
 
-- [ ] Ajouter des tests
-- [ ] Mettre en place un linter
-- [ ] CI
-- [ ] Export CSV
-- [ ] Refacto du module legacy
+```bash
+# Tests unitaires (Jest)
+npx jest
 
----
+# Tests unitaires avec détail
+npx jest --verbose
 
-_Projet fil rouge B3 Dev — My Digital School Bordeaux_
+# Tests E2E (Playwright) — l'app doit être lancée
+npx playwright test
+
+# Couverture de code
+npx jest --coverage
+```
+
+## Structure du projet
+
+fintrack-starter/
+├── src/
+│   ├── App.jsx                      # Composant principal
+│   ├── calculator.js                # Moteur de calcul financier
+│   ├── export-csv.js                # Export CSV des transactions
+│   ├── string-utils.js              # Utilitaires chaînes
+│   ├── transactions-legacy.js       # Module legacy audité
+│   ├── calculator.test.js           # Tests unitaires calculator
+│   ├── export-csv.test.js           # Tests unitaires export CSV
+│   ├── string-utils.test.js         # Tests unitaires string-utils
+│   └── transactions-legacy.test.js  # Tests de caractérisation legacy
+├── tests-e2e/
+│   ├── pages/
+│   │   └── transaction-form.js      # Page Object formulaire
+│   ├── smoke.spec.js                # Test smoke page d'accueil
+│   ├── balance.spec.js              # Test ajout transaction
+│   ├── export-csv.spec.js           # Test export CSV
+│   └── transactions.spec.js        # Test liste transactions
+├── docs/
+│   ├── audit.md                     # Audit module legacy
+│   └── scenarios.md                 # Scénarios BDD
+├── .github/workflows/               # CI GitHub Actions
+├── playwright.config.js             # Config Playwright
+└── babel.config.cjs                 # Config Babel/Jest
+
+## Documentation
+
+- [Audit du module legacy](docs/audit.md)
+- [Scénarios BDD](docs/scenarios.md)
